@@ -7,13 +7,10 @@ from datetime import datetime
 
 class TestApp(EClient,EWrapper):
 
-    def __init__(self,self):
+    def __init__(self):
         EClient.__init__(self,self)
     def error(self, reqId, errorCode, errorString):
         print(reqId,"error")
-    def historicalData(self, reqId, bar):
-        print(reqId, bar)
-
 
 def main():
     contract = Contract()
@@ -23,8 +20,8 @@ def main():
     contract.currency = "USD"
     contract.primaryExchange = "NASDAQ"
 
-    start = datetime.datetime(2020, 1, 10)
-    end = datetime.datetime.now()
+    start = datetime(2020, 1, 10)
+    end = datetime.now()
     barsList = []
 
     endtime=end
@@ -42,7 +39,6 @@ def main():
             c=dividend/b
             NewBarsList.append(c)
     df = util.df(NewBarsList)
-    print(df)
 
 
 
@@ -51,8 +47,8 @@ def main():
         weights=np.repeat(1.0,window)/window
         smas=np.convolve(values,weights,'valid')
         return smas
-    print MovingAverageYield(df,len(df))
-    app.run()
+    newavg=MovingAverageYield(df,len(df))
+    print(newavg)
 
 if __name__=='__main__':
     main()

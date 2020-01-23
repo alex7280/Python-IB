@@ -8,12 +8,12 @@ import numpy as np
 
 class TestApp(EClient,EWrapper):
 
-    def __init__(self,self):
+    def __init__(self):
         EClient.__init__(self,self)
     def error(self, reqId, errorCode, errorString):
         print(reqId,"error")
     def historicalData(self, reqId, bar):
-        print(reqId, bar)
+        barsList.append(bar)
 
 
 def main():
@@ -30,19 +30,20 @@ def main():
 
     endtime=end
     while endtime>start:
-        app.reqHistoricalData(1,contract,"","1 D","1 hour","MIDPOINT",0,1,False,[])
+        bars=app.reqHistoricalData(1,contract,"","26 W","1 day","MIDPOINT",0,1,False,[])
         barsList.append(bars)
         endtime= bars[0].date
 
-    allBars = [b for bars in barsList for b in bars]
-    df = util.df(allBars)
-    print(df)
-    app.run()
+        allBars = [b for bars in barsList for b in bars]
+        df = util.df(allBars)
+
+
     def movingaverage(values,window):
         weights=np.repeat(1.0,window)/window
         smas=np.convolve(values,weights,'valid')
         return smas
-    print movingaverage(df,len(df))
+    avg=movingaverage(df,len(df))
+    print(avg)
 
 if __name__=='__main__':
     main()

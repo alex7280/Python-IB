@@ -2,7 +2,8 @@ from ibapi.client import EClient
 from ibapi.wrapper import EWrapper
 from ibapi.contract import Contract
 from ibapi.order import *
-from openpxyl import Workbook
+import xlrd
+import pandas as pd
 from threading import Timer
 
 class TestApp(EClient,EWrapper):
@@ -74,13 +75,21 @@ def main():
     end = datetime.datetime.now()
     barsList = []
 
+    wb = xlrd.open_workbook("data.xlsx")
+    sheet = wb.sheet_by_index(0)
+    for row_num in range(sheet.nrows):
+        row_value = sheet.row_values(row_num)
+        if row_value[1] == "Stock Ticker":
+
+            df = pd.read_excel('filename.xlsm', sheetname=0)
+            mylist = df['Stock Ticker'].tolist()
+
     endtime = end
     while endtime > start:
-        contract.symbol="TGP PrA"
+        for i in mylist:
+        contract.symbol=mylist[i]
         bars = app.reqHistoricalData(1, contract, "", "26 W", "1 day", "MIDPOINT", 0, 1, False, [])
         barsList.append(bars)
-        contract.symbol="TGP PrB"
-        bars = app.reqHistoricalData(1, contract, "", "26 W", "1 day", "MIDPOINT", 0, 1, False, [])
         endtime = bars[0].date
 
     app = TestApp()
@@ -101,6 +110,10 @@ def main():
     if Dividend_Pershare<movingaverage(df,len(df)):
         Timer(3,app.stop).start()
     app.run()
+
+
+if __name__=="__main__":
+    main()
 
 
 
