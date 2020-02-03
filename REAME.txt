@@ -1,0 +1,10 @@
+1. The program consist of 5 different programs: Stock Price TGP,Stock Price TGP PRa,Stock Price TGP PRb,YTC TGP,CompanyAccountingInfo TGP, PlaceSellOrder
+2. I am using Pycharm community edition and the location that I save excel files to is D:\TWS API\source\pythonclient\ibapi, this can be changed inside py
+3. Stock Price TGP and CompanyAccountingInfo TGP need to be run before YTC TGP
+4. I can't acquire some of the data so I used parameter to replace them: they are preferred stock dividends, common and preferred stock call price,
+share outstanding numbers.
+5.openpyxl need to be installed for this program to run
+6.Currently, I can't figure out a way that can read all the stock tickers from a file and find their dividend yield, because tws api
+doesn't provide enough IB dividend for preferred shares, which causes exception when I tried to get these info and breaks the loop. Sorry about this
+7. The general structure is Stock Price TGP,Stock Price TGP PRa,Stock Price TGP PRb,YTC TGP,CompanyAccountingInfo TGP set up all the information that Place and Sell Order Need.
+ Place and Sell Order is the main component of this.

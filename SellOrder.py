@@ -4,7 +4,6 @@ from ibapi.contract import Contract
 from ibapi.order import Order
 from threading import Timer
 import openpyxl as Workbook
-import getpass
 
 class TestApp(EClient,EWrapper):
     def __init__(self):
@@ -56,23 +55,21 @@ class TestApp(EClient,EWrapper):
         TGP_Dividend_PRb=0.4
         Outstanding_share=1000
         condition_1=TGP_Dividend_PRa>TGP_Dividend_PRb
-        condition_2=float(str(range_4['A1'].value))>0.7
-        condition_3=float(str(range_3['A1'].value))<float(str(range_1['A1'].value))
-        condition_4=(float(str(range['A1'].value))-float(str(range_2['B1'].value))*Outstanding_share)/(TGP_Dividend_PRa+TGP_Dividend_PRb)>2.0
+        condition_2=float(str(range_4['A1'].value))<0.5
+        condition_3=0.6*float(str(range_3['A1'].value))>float(str(range_1['A1'].value))
+        condition_4=(float(str(range['A1'].value))-float(str(range_2['B1'].value))*Outstanding_share)/(TGP_Dividend_PRa+TGP_Dividend_PRb)<1.0
 
 
 
 
+        if condition_1 or condition_2 or condition_3 or condition_4:
+            order= Order()
+            order.action="SELL"
+            order.orderType="LMT"
+            order.totalQuantity = 400
+            order.lmtPrice=210
 
-        if condition_1:
-            if condition_2 and condition_3 and condition_4:
-                order= Order()
-                order.action="BUY"
-                order.orderType="LMT"
-                order.totalQuantity = 400
-                order.lmtPrice=210
-
-        if not(condition_1 and condition_2 and condition_3 and condition_4):
+        if not(condition_1 or condition_2 or condition_3 or condition_4):
             print('doesnt meet criteria cant place order')
         else:
             self.placeOrder(self.nextOrderId, contract,order)
@@ -90,5 +87,3 @@ def main():
 
 if __name__=='__main__':
     main()
-
-
