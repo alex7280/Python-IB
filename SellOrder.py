@@ -51,9 +51,9 @@ class TestApp(EClient,EWrapper):
 
         wb_4= Workbook.load_workbook('D:\\TWS API\\source\\pythonclient\\ibapi\\YTC TGP.xlsx')
         range_4 = wb_4['YTC TGP']
-        TGP_Dividend_PRa=0.5
-        TGP_Dividend_PRb=0.4
-        Outstanding_share=1000
+        TGP_Dividend_PRa = float(input('please enter Dividend of TGP PRa'))
+        TGP_Dividend_PRb = float(input('please enter Dividend of TGP PRb'))
+        Outstanding_share = float(input('please enter Outstanding share of PRa'))
         condition_1=TGP_Dividend_PRa>TGP_Dividend_PRb
         condition_2=float(str(range_4['A1'].value))<0.5
         condition_3=0.6*float(str(range_3['A1'].value))>float(str(range_1['A1'].value))

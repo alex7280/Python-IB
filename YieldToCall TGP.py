@@ -28,7 +28,7 @@ def main():
     now_total=float(now_year)*365+float(now_month)*30+float(now_day)
     time_difference=(total_next_dividend-now_total)/365
 
-    Call_Price=10
+    Call_Price=float(input('Please enter call price'))
     YTC=(annual_interest+(price-Call_Price)/2)/((price+Call_Price)/2)
 
     wb = Workbook.Workbook()
